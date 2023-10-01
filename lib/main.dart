@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import '../utils/colors.dart';
@@ -8,7 +8,19 @@ import 'responsive/web_screen_layout.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); 
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyDwxUFvUzUU7lghNM0wRNbwKpVyfkaPH9M",
+        appId: "1:655194227975:web:541c938366f8dee226f1a2",
+        messagingSenderId: "655194227975",
+        projectId: "instagram-flutter-c0018",
+        storageBucket: "instagram-flutter-c0018.appspot.com",
+      ),
+    );
+  } else {
+    await Firebase.initializeApp();
+  }
   runApp(const MyApp());
 }
 
