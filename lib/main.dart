@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:instagram_flutter/screens/login_screen.dart';
 import '../utils/colors.dart';
 import '../responsive/responsive_layout_screen.dart';
 import 'responsive/mobile_screen_layout.dart';
@@ -36,10 +37,11 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: mobileBackgroundColor,
         primaryColor: primaryColor,
       ),
-      home: const ResponsiveLayout(
-        mobileScreenLayout: MobileScreenLayout(),
-        webScreenLayout: WebScreenLayout(),
-      ),
+      // home: const ResponsiveLayout(
+      //   mobileScreenLayout: MobileScreenLayout(),
+      //   webScreenLayout: WebScreenLayout(),
+      // ),
+      home: const LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
