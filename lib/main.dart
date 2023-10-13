@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'providers/theme_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:instagram_flutter/screens/login_screen.dart';
-import '../utils/colors.dart';
-import '../responsive/responsive_layout_screen.dart';
-import 'responsive/mobile_screen_layout.dart';
-import 'responsive/web_screen_layout.dart';
+import 'routes.dart';
+import 'utils/theme_data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,19 +30,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Instagram Clone',
-      theme: ThemeData.dark().copyWith(
-        useMaterial3: true,
-        scaffoldBackgroundColor: mobileBackgroundColor,
-        primaryColor: primaryColor,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) {
+          return ThemeProvider();
+        }),
+      ],
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, child) {
+          return MaterialApp(
+            title: 'Instagram -',
+            theme: customThemeData(isDarkTheme: true, context: context),
+            home: const LoginScreen(),
+            routes: allRoutes(context),
+            debugShowCheckedModeBanner: false,
+          );
+        },
       ),
-      // home: const ResponsiveLayout(
-      //   mobileScreenLayout: MobileScreenLayout(),
-      //   webScreenLayout: WebScreenLayout(),
-      // ),
-      home: const LoginScreen(),
-      debugShowCheckedModeBanner: false,
     );
   }
 }

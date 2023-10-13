@@ -36,7 +36,10 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.7
+  google_fonts: ^6.1.0
   iconly: ^1.0.1
+  provider: ^6.0.5
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -54,7 +57,7 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/ic_instagram.svg
+    - assets/images/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see
