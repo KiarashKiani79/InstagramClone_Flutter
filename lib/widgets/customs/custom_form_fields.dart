@@ -3,30 +3,34 @@ import 'package:iconly/iconly.dart';
 
 import '../../utils/validator.dart';
 
-// ****************** Fullname ****************** //
-class FullnameField extends StatelessWidget {
-  const FullnameField({
-    super.key,
-    required TextEditingController nameController,
-  }) : _nameController = nameController;
+// ****************** Name ****************** //
+class NameField extends StatelessWidget {
+  final TextEditingController nameController;
+  final String label;
+  final String hintText;
+  final IconData prefixIcon;
 
-  final TextEditingController _nameController;
+  const NameField({
+    super.key,
+    required this.nameController,
+    required this.label,
+    required this.hintText,
+    required this.prefixIcon,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: _nameController,
+      controller: nameController,
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.name,
-      decoration: const InputDecoration(
-        label: Text("Full Name"),
-        hintText: "Enter your full name",
-        prefixIcon: Icon(
-          IconlyLight.profile,
-        ),
+      decoration: InputDecoration(
+        label: Text(label),
+        hintText: hintText,
+        prefixIcon: Icon(prefixIcon),
       ),
       validator: (value) {
-        return MyValidators.displayNamevalidator(value);
+        return MyValidators.usernameValidator(value);
       },
     );
   }
@@ -38,7 +42,6 @@ class EmailField extends StatelessWidget {
     super.key,
     required TextEditingController emailController,
   }) : _emailController = emailController;
-
   final TextEditingController _emailController;
 
   @override
@@ -69,7 +72,6 @@ class PasswordField extends StatefulWidget {
     required TextEditingController passwordController,
     required this.isObscure,
   }) : _passwordController = passwordController;
-
   final TextEditingController _passwordController;
   late bool isObscure;
 
@@ -119,7 +121,6 @@ class ConfirmPasswordField extends StatefulWidget {
     required TextEditingController passwordController,
   })  : _repeatPasswordController = repeatPasswordController,
         _passwordController = passwordController;
-
   final TextEditingController _repeatPasswordController;
   late bool isObscure;
   final TextEditingController _passwordController;
@@ -163,34 +164,42 @@ class _ConfirmPasswordFieldState extends State<ConfirmPasswordField> {
   }
 }
 
-// ****************** Description ****************** //
-class DescriptionField extends StatelessWidget {
-  const DescriptionField({
-    super.key,
-    required TextEditingController emailController,
-  }) : _emailController = emailController;
+// ****************** Multiline ****************** //
+class MultilineField extends StatelessWidget {
+  final TextEditingController fieldController;
+  final String label;
+  final String hintText;
+  final IconData prefixIcon;
 
-  final TextEditingController _emailController;
+  const MultilineField({
+    super.key,
+    required this.fieldController,
+    required this.label,
+    required this.hintText,
+    required this.prefixIcon,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: _emailController,
-      textInputAction: TextInputAction.next,
-      keyboardType: TextInputType.text,
-      maxLines: 5,
-      decoration: const InputDecoration(
-        label: Text("Description"),
-        hintText: "Write a description",
+      controller: fieldController,
+      textInputAction: TextInputAction.newline,
+      keyboardType: TextInputType.multiline,
+      maxLines: 3,
+      decoration: InputDecoration(
+        label: Text(label),
+        hintText: hintText,
         prefixIcon: Padding(
-          padding: EdgeInsets.only(bottom: 95),
+          padding: const EdgeInsets.only(bottom: 45.0),
           child: Icon(
-            IconlyLight.paper,
+            prefixIcon,
           ),
         ),
+        // Description => IconlyLight.paper
+        // Bio => IconlyLight.info_square
       ),
       validator: (value) {
-        return MyValidators.descriptionValidator(value);
+        return MyValidators.descriptionValidator(value, label);
       },
     );
   }

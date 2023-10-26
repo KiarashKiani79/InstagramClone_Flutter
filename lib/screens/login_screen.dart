@@ -17,14 +17,30 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passController = TextEditingController();
+//
+// Form key
+  late GlobalKey<FormState> _formkey;
+
+// Controllers
+  late TextEditingController _emailController, _passwordController;
+
+// Password visibility
   final bool _isObscure = true;
 
   @override
+  void initState() {
+    _formkey = GlobalKey<FormState>();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
   void dispose() {
+    _formkey.currentState?.dispose();
     _emailController.dispose();
-    _passController.dispose();
+    _passwordController.dispose();
+    ();
     super.dispose();
   }
 
@@ -34,59 +50,62 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: Device.standardSpacing * 2),
-          child: Column(
-            children: [
-              SizedBox(
-                height: Device.appBarHeight + Device(context).statusBarHeight,
-              ),
-              SvgPicture.asset(
-                AssetsManager.icInstagram,
-                colorFilter:
-                    const ColorFilter.mode(primaryColor, BlendMode.srcIn),
-                height: 64,
-              ),
-              Image.asset(
-                AssetsManager.instaGif,
-              ),
-              EmailField(
-                emailController: _emailController,
-              ),
-              SizedBox(
-                height: Device.standardSpacing,
-              ),
-              PasswordField(
-                passwordController: _passController,
-                isObscure: _isObscure,
-              ),
-              SizedBox(
-                height: Device.standardSpacing * 3,
-              ),
-              MyGradientButton(
-                text: "Login",
-                onPressed: () {},
-                width: double.infinity,
-              ),
-              SizedBox(
-                height: Device.standardSpacing * 2,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Don't have an account?"),
-                  SizedBox(
-                    width: Device.standardSpacing,
-                  ),
-                  GestureDetector(
-                    onTap: () =>
-                        Navigator.pushNamed(context, SignUpScreen.routeName),
-                    child: const MySubtitleText(
-                      text: "Sign up",
-                      color: secondaryColor,
+          child: Form(
+            key: _formkey,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: Device.appBarHeight + Device(context).statusBarHeight,
+                ),
+                SvgPicture.asset(
+                  AssetsManager.icInstagram,
+                  colorFilter:
+                      const ColorFilter.mode(primaryColor, BlendMode.srcIn),
+                  height: 64,
+                ),
+                Image.asset(
+                  AssetsManager.instaGif,
+                ),
+                EmailField(
+                  emailController: _emailController,
+                ),
+                SizedBox(
+                  height: Device.standardSpacing,
+                ),
+                PasswordField(
+                  passwordController: _passwordController,
+                  isObscure: _isObscure,
+                ),
+                SizedBox(
+                  height: Device.standardSpacing * 3,
+                ),
+                MyGradientButton(
+                  text: "Login",
+                  onPressed: () {},
+                  width: double.infinity,
+                ),
+                SizedBox(
+                  height: Device.standardSpacing * 2,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Don't have an account?"),
+                    SizedBox(
+                      width: Device.standardSpacing,
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    GestureDetector(
+                      onTap: () =>
+                          Navigator.pushNamed(context, SignUpScreen.routeName),
+                      child: const MySubtitleText(
+                        text: "Sign up",
+                        color: secondaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
