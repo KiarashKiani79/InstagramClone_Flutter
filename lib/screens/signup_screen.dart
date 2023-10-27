@@ -4,8 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:iconly/iconly.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_flutter/widgets/shimmer_widget.dart';
 // Screens
 import '/screens/login_screen.dart';
 import '/screens/complete_user_info_screen.dart';
@@ -107,8 +106,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       setState(() {
         _isLoading = true;
       });
-      // Register Function
-      await AuthMethods().registerWithEmailAndPassword(
+      // Register method
+      await AuthMethods().registerWithEmailAndPass(
         username: _nameController.text.trim(),
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
@@ -116,12 +115,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
         profilePhoto: _pickedImage!,
       );
       if (!mounted) return;
-      Navigator.pushNamed(context, CompleteUserInfoScreen.routeName);
-      // Show success message
       Dialogs.toastSuccess(
         msg: "User Registered Successfully",
         context: context,
       );
+      Navigator.pushNamed(context, CompleteUserInfoScreen.routeName);
+      // Show success message
       // Error handling
     } on FirebaseAuthException catch (error) {
       await Dialogs.error(
@@ -138,6 +137,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
+// ************** Build ************** //
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -156,10 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     SizedBox(
                       height: Device.standardSpacing * 3,
                     ),
-                    Shimmer.fromColors(
-                      period: const Duration(seconds: 5),
-                      baseColor: Theme.of(context).colorScheme.primary,
-                      highlightColor: Theme.of(context).colorScheme.secondary,
+                    ShimmerWidget(
                       child: Text(
                         "Capture, Share, and Connect with the World",
                         style: TextStyle(

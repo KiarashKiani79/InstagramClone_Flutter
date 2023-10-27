@@ -1,7 +1,7 @@
 import 'package:image_picker/image_picker.dart';
 
-// *************** IMAGE PICKER  ***************** //
-pickImageLocaly({
+// *************** IMAGE PICKER ***************** //
+dynamic pickImageLocaly({
   required ImageSource source,
 }) async {
   final ImagePicker imagePicker = ImagePicker();
@@ -11,5 +11,6 @@ pickImageLocaly({
   if (pickedImage != null) {
     return await pickedImage.readAsBytes();
   }
+  // ignore: avoid_print
   print("No image selected");
 }

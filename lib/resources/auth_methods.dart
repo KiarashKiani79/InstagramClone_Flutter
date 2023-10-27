@@ -9,19 +9,25 @@ class AuthMethods {
   final CollectionReference _userCollection =
       FirebaseFirestore.instance.collection("users");
 
-// *Sign-in* with email and password
-  Future signInWithEmailAndPassword(String email, String password) async {
+// *Login* with email and password
+  Future<void> loginWithEmailAndPass({
+    required String email,
+    required String password,
+  }) async {
     try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      return result.user;
-    } catch (e) {
+      await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (_) {
+      rethrow;
+    } catch (_) {
       rethrow;
     }
   }
 
 // *Register* with email and password
-  Future<void> registerWithEmailAndPassword({
+  Future<void> registerWithEmailAndPass({
     required String username,
     required String email,
     required String password,
