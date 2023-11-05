@@ -1,13 +1,12 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:iconly/iconly.dart';
-import 'package:instagram_flutter/widgets/shimmer_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 // Screens
-import '/screens/login_screen.dart';
-import '/screens/complete_user_info_screen.dart';
+import '../responsive/responsive_layout_screen.dart';
+import '/screens/auth/login_screen.dart';
 // Resources
 import '/resources/auth_methods.dart';
 // Services
@@ -21,6 +20,7 @@ import '/utils/device_size.dart';
 // Widgets
 import '/widgets/customs/custom_buttons.dart';
 import '/widgets/customs/custom_form_fields.dart';
+import '/widgets/shimmer_widget.dart';
 import '/widgets/customs/custom_text.dart';
 //
 
@@ -34,7 +34,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
 //
-// ************** Variables ************** //
+// **************************** Variables **************************** //
   late GlobalKey<FormState> _formkey;
 
   late TextEditingController _nameController,
@@ -73,7 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
-// ************** Methods ************** //
+// **************************** Methods **************************** //
 
 // Pick image from gallery or camera
   void selectImage() async {
@@ -119,7 +119,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         msg: "User Registered Successfully",
         context: context,
       );
-      Navigator.pushNamed(context, CompleteUserInfoScreen.routeName);
+      Navigator.pushNamed(context, ResponsiveLayout.routeName);
       // Show success message
       // Error handling
     } on FirebaseAuthException catch (error) {
@@ -137,7 +137,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-// ************** Build ************** //
+// **************************** Build **************************** //
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -237,7 +237,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       prefixIcon: IconlyLight.info_square,
                     ),
                     SizedBox(
-                      height: Device.standardSpacing * 3,
+                      height: Device.standardSpacing * 2,
                     ),
                     // ***** Sign up button ***** //
                     MyGradientButton(
@@ -258,7 +258,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           width: Device.standardSpacing / 2,
                         ),
                         GestureDetector(
-                          onTap: () => Navigator.pushNamed(
+                          onTap: () => Navigator.pushReplacementNamed(
                               context, LoginScreen.routeName),
                           child: const MySubtitleText(
                             text: "Login",

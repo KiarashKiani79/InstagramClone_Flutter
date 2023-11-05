@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/customs/custom_loading_indicator.dart';
+
 class LoadingManager extends StatelessWidget {
   const LoadingManager(
       {super.key, required this.child, required this.isLoading});
@@ -16,7 +18,7 @@ class LoadingManager extends StatelessWidget {
           Container(
             color: Colors.black.withOpacity(0.5),
             child: const Center(
-              child: CircularProgressIndicator(),
+              child: CustomLoadingIndicator(),
             ),
           ),
       ],

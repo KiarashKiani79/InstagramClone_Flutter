@@ -1,19 +1,24 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instagram_flutter/screens/home_screen.dart';
-import 'package:instagram_flutter/screens/signup_screen.dart';
-import 'package:instagram_flutter/services/assets_manager.dart';
-import 'package:instagram_flutter/services/loading_manager.dart';
-import 'package:instagram_flutter/utils/colors.dart';
-import 'package:instagram_flutter/utils/device_size.dart';
-import 'package:instagram_flutter/widgets/auth/google_btn.dart';
-import 'package:instagram_flutter/widgets/customs/custom_buttons.dart';
-import 'package:instagram_flutter/widgets/customs/custom_form_fields.dart';
-import 'package:instagram_flutter/widgets/customs/custom_text.dart';
-
-import '../resources/auth_methods.dart';
-import '../services/dialogs.dart';
+// Firebase
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:instagram_flutter/screens/responsive/responsive_layout_screen.dart';
+// Screens
+import '/screens/auth/signup_screen.dart';
+// Services
+import '/services/assets_manager.dart';
+import '/services/loading_manager.dart';
+import '/services/dialogs.dart';
+// Utils
+import '/utils/colors.dart';
+import '/utils/device_size.dart';
+// Widgets
+import '/widgets/auth/google_btn.dart';
+import '/widgets/customs/custom_buttons.dart';
+import '/widgets/customs/custom_form_fields.dart';
+import '/widgets/customs/custom_text.dart';
+// Resources
+import '/resources/auth_methods.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = "/login";
@@ -72,23 +77,25 @@ class _LoginScreenState extends State<LoginScreen> {
         password: _passwordController.text.trim(),
       );
       if (!mounted) return;
+      // Success Toast
       Dialogs.toastSuccess(
         msg: "Logged in Successfully",
         context: context,
       );
-      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-      // Show success message
+      Navigator.pushReplacementNamed(context, ResponsiveLayout.routeName);
       // Error handling
     } on FirebaseAuthException catch (error) {
       await Dialogs.error(
         context: context,
         subtitle: error.message.toString(),
       );
+      setState(() {});
     } catch (error) {
       await Dialogs.error(
         context: context,
         subtitle: error.toString(),
       );
+      setState(() {});
     } finally {
       isLoading = false;
     }
@@ -108,14 +115,13 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: [
                   SizedBox(
-                    height:
-                        Device.appBarHeight + Device(context).statusBarHeight,
+                    height: Device.appBarHeight,
                   ),
                   SvgPicture.asset(
                     AssetsManager.icInstagram,
                     colorFilter:
                         const ColorFilter.mode(primaryColor, BlendMode.srcIn),
-                    height: 64,
+                    // height: 64,
                   ),
                   Image.asset(
                     AssetsManager.instaGif,
@@ -179,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: Device.standardSpacing,
                       ),
                       GestureDetector(
-                        onTap: () => Navigator.pushNamed(
+                        onTap: () => Navigator.pushReplacementNamed(
                             context, SignUpScreen.routeName),
                         child: const MySubtitleText(
                           text: "Sign up",

@@ -3,11 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:instagram_flutter/screens/home_screen.dart';
-import 'package:instagram_flutter/utils/colors.dart';
-import 'package:instagram_flutter/widgets/customs/custom_buttons.dart';
+import '../../services/loading_manager.dart';
+import '/widgets/customs/custom_buttons.dart';
 import 'package:ionicons/ionicons.dart';
 
+import '../../screens/responsive/responsive_layout_screen.dart';
 import '../../services/dialogs.dart';
 
 class GoogleButton extends StatefulWidget {
@@ -58,7 +58,7 @@ class _GoogleButtonState extends State<GoogleButton> {
         });
       }
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+        Navigator.pushReplacementNamed(context, ResponsiveLayout.routeName);
       });
       if (!mounted) return;
       Dialogs.toastSuccess(
@@ -84,21 +84,18 @@ class _GoogleButtonState extends State<GoogleButton> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? const Center(
-            child: CircularProgressIndicator(
-              color: secondaryColor,
-            ),
-          )
-        : MyOutlinedButton(
-            text: "Sign in with Google",
-            seedColor: Theme.of(context).colorScheme.secondary,
-            width: double.infinity,
-            hasIcon: true,
-            iconData: Ionicons.logo_google,
-            onPressed: () async {
-              isLoading ? null : await _signInWithGoogle(context: context);
-            },
-          );
+    return LoadingManager(
+      isLoading: isLoading,
+      child: MyOutlinedButton(
+        text: "Sign in with Google",
+        seedColor: Theme.of(context).colorScheme.secondary,
+        width: double.infinity,
+        hasIcon: true,
+        iconData: Ionicons.logo_google,
+        onPressed: () async {
+          isLoading ? null : await _signInWithGoogle(context: context);
+        },
+      ),
+    );
   }
 }

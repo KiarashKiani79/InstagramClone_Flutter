@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../utils/dimentions.dart';
+import '../../utils/dimentions.dart';
 
 class ResponsiveLayout extends StatelessWidget {
+  static const String routeName = "/responsive-layout";
   final Widget mobileScreenLayout;
   final Widget webScreenLayout;
 
