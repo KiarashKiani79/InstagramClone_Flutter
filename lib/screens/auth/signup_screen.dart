@@ -120,18 +120,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
         context: context,
       );
       Navigator.pushNamed(context, ResponsiveLayout.routeName);
-      // Show success message
       // Error handling
     } on FirebaseAuthException catch (error) {
       await Dialogs.error(
         context: context,
         subtitle: error.message.toString(),
       );
+      setState(() {});
     } catch (error) {
       await Dialogs.error(
         context: context,
         subtitle: error.toString(),
       );
+      setState(() {});
     } finally {
       _isLoading = false;
     }

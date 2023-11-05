@@ -2,6 +2,7 @@ import "dart:typed_data";
 
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
+import "package:instagram_flutter/models/user_model.dart";
 import "package:instagram_flutter/resources/storage_methods.dart";
 
 class AuthMethods {
@@ -50,22 +51,22 @@ class AuthMethods {
         file: profilePhoto,
         isProfile: true,
       );
+// Create User Model
+      final UserModel userModel = UserModel(
+        uid: uid,
+        username: username,
+        email: email,
+        bio: bio,
+        photoUrl: photoUrl,
+        followers: [],
+        following: [],
+      );
 
 // Add user data to firestore
       await _userCollection.doc(uid).set(
-        {
-          "username": username,
-          "email": email,
-          "bio": bio,
-          "photoUrl": photoUrl,
-          "followers": [],
-          "following": [],
-        },
-      );
-
-      // DocumentSnapshot userDoc =
-      //     await _userCollection.doc(uid).get();
-      // print(userDoc.data());
+            userModel.toJson(),
+          );
+// Error Handeling
     } on FirebaseAuthException catch (_) {
       rethrow;
     } catch (_) {
